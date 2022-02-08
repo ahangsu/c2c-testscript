@@ -33,7 +33,7 @@ Install dependencies:
 - `pip install -r requirement.txt`
 
 Run tests:
-- First, start an instance of [sandbox](github.com/algorand/sandbox) (Docker required): `sandbox up dev`.
+- First, start an instance of [sandbox](https://github.com/algorand/sandbox) (Docker required): `sandbox up dev`.
 - `TODO`
 - When finished, stop the docker with `sandbox down`.
 
