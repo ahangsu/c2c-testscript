@@ -35,10 +35,10 @@ Install dependencies:
 Run tests:
 - First, start an instance of [sandbox](https://github.com/algorand/sandbox) (Docker required): `sandbox up dev`.
 - `TODO`
-- When finished, stop the docker with `sandbox down`.
+- When finished, stop the docker with `sandbox down` (and `sandbox clean`).
 
 ## Candidate C2C tests
 
-- [ ] Zeph's C2C SDK test
+- [ ] Zeph's C2C SDK test (need to change pre-compute app-id to something else)
 - [ ] Ben's AVM 1.1 Demo code
 - [ ] `go-algorand` e2e test for c2c featrue `app-inner-calls.py`
