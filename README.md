@@ -17,14 +17,14 @@ Config your sandbox with configuration file `sandbox.dev`:
 ```shell
 export ALGOD_CHANNEL=""
 export ALGOD_URL="https://github.com/algorand/go-algorand"
-export ALGOD_BRANCH="feature/contract-to-contract"
+export ALGOD_BRANCH="master"
 export ALGOD_SHA=""
 export NETWORK=""
 export NETWORK_TEMPLATE="images/algod/DevModeNetwork.json"
 export NETWORK_BOOTSTRAP_URL=""
 export NETWORK_GENESIS_FILE=""
 export INDEXER_URL="https://github.com/algorand/indexer"
-export INDEXER_BRANCH="algochoi/c2c-indexer-changes"
+export INDEXER_BRANCH="algochoi/c2c-playground"
 export INDEXER_SHA=""
 export INDEXER_DISABLED=""
 ```
@@ -42,4 +42,3 @@ Run tests:
 - [ ] Zeph's C2C SDK test
 - [ ] Ben's AVM 1.1 Demo code
 - [ ] `go-algorand` e2e test for c2c featrue
-
