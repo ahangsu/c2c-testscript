@@ -41,4 +41,4 @@ Run tests:
 
 - [ ] Zeph's C2C SDK test
 - [ ] Ben's AVM 1.1 Demo code
-- [ ] `go-algorand` e2e test for c2c featrue
+- [ ] `go-algorand` e2e test for c2c featrue `app-inner-calls.py`
