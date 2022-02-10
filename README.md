@@ -42,3 +42,31 @@ Run tests:
 - [ ] Zeph's C2C SDK test (need to change pre-compute app-id to something else)
 - [ ] Ben's AVM 1.1 Demo code
 - [ ] `go-algorand` e2e test for c2c featrue `app-inner-calls.py`
+
+## About Using Betanet Dispenser
+
+> Time: 2020/02/10/11:00
+
+I took notes about what I did for taking (enough?) fund to test over betanet, and leave room for discussion about how much fund needed.
+
+Essentially create wallet and account first:
+
+```shell
+# ~/node/betanetdata is where my betanet-data sits
+goal node start -d ~/node/betanetdata/
+# catchup
+goal node catchup 16160000#FHLQUKMAUPW5GI5KTLLDDSXIZXT6UTEAYGSU6CVPI7LOOX4WXNYA -d ~/node/betanetdata/
+# open a new wallet for betanet test
+goal wallet new betanet-test -d ~/node/betanetdata
+# open a new account for betanet test
+goal account new tester -d ~/node/betanetdata
+```
+
+Then go to [dispenser](https://betanet.algoexplorer.io/dispenser) to retrieve some fund to initiate the test.
+
+Transaction ID: [NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA](https://betanet.algoexplorer.io/tx/NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA).
+
+> Can also verify with `goal account list -d ~/node/betanetdata` to check how much microAlgos we have.
+
+TODO: The question left to be answered is: 
+- if we can provide a unified url+port flavor solution so we can quickly adapt from sandbox test to betanet test.
