@@ -1,0 +1,7 @@
+mypy==0.910
+-e git+https://github.com/algorand/pyteal.git@master#egg=pyteal
+-e git+https://github.com/algorand/py-algorand-sdk.git@master#egg=py-algorand-sdk
+black==21.9b0
+glom==20.11.0
+pytest==6.2.5
+git+https://github.com/behave/behave
