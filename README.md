@@ -24,7 +24,7 @@ export NETWORK_TEMPLATE="images/algod/DevModeNetwork.json"
 export NETWORK_BOOTSTRAP_URL=""
 export NETWORK_GENESIS_FILE=""
 export INDEXER_URL="https://github.com/algorand/indexer"
-export INDEXER_BRANCH="algochoi/c2c-playground"
+export INDEXER_BRANCH="develop"
 export INDEXER_SHA=""
 export INDEXER_DISABLED=""
 ```
