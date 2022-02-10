@@ -48,7 +48,7 @@ Essentially create wallet and account first:
 ```shell
 # ~/node/betanetdata is where my betanet-data sits
 goal node start -d ~/node/betanetdata/
-# catchup
+# catchup (16160000... checkpoint is for 3.3.0beta, need to update later)
 goal node catchup 16160000#FHLQUKMAUPW5GI5KTLLDDSXIZXT6UTEAYGSU6CVPI7LOOX4WXNYA -d ~/node/betanetdata/
 # open a new wallet for betanet test
 goal wallet new betanet-test -d ~/node/betanetdata/
@@ -73,7 +73,7 @@ Transaction ID: [NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA](https://b
 
 ### On the possibility of running such tests
 
-There are 2 things I am thinking right now that stops a test from being ran over betanet:
+There are 2 things I am thinking that might stop a test from being executed over betanet:
 - Too much fund needed (100+?)
 - Relying on a pre-computed applicationID and impossible to rewrite
 
