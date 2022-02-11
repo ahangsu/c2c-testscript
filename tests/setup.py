@@ -20,5 +20,7 @@ SandBoxTestEnvConfig = TestEnvConfig(
     KMD_WALLET_PASSWORD="",
 )
 
+MIN_BALANCE = 1e5
+
 # TODO needs configuration for betanet, but we now work over sandbox settings
 # NOTE some thoughts about how this is done for general betanet / any other networks
