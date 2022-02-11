@@ -7,11 +7,11 @@ This repo holds the testscript to test contract-to-contract feature over a priva
 This repo requires Python 3.6 or higher. It is recommended to use a Python virtual environment to install required dependencies.
 
 Setup venv (one time):
-- `python3 -m venv venv`
+- `python3 -m venv .venv`
 
 Activate venv:
-- `. venv/bin/activate` (under zsh/bash)
-- `. venv/bin/activate.fish` (if your shell is fish)
+- `. .venv/bin/activate` (under zsh/bash)
+- `. .venv/bin/activate.fish` (if your shell is fish)
 
 Config your sandbox with configuration file `sandbox.dev`:
 ```shell
@@ -28,6 +28,7 @@ export INDEXER_BRANCH="develop"
 export INDEXER_SHA=""
 export INDEXER_DISABLED=""
 ```
+
 
 Install dependencies:
 - `pip install -r requirements.txt`
