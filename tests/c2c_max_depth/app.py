@@ -1,6 +1,7 @@
 from pyteal.ast.acct import AccountParam
 from pyteal.ast.app import AppParam, OnComplete
 from pyteal.ast.assert_ import Assert
+from pyteal.ast.binaryexpr import Exp
 from pyteal.ast.bytes import Bytes
 from pyteal.ast.expr import Expr
 from pyteal.ast.gitxn import Gitxn
@@ -9,9 +10,13 @@ from pyteal.ast.if_ import If
 from pyteal.ast.int import Int
 from pyteal.ast.itxn import InnerTxn, InnerTxnBuilder
 from pyteal.ast.naryexpr import Concat
+from pyteal.ast.return_ import Approve, Return
 from pyteal.ast.seq import Seq
 from pyteal.ast.txn import Txn, TxnField, TxnType
 from pyteal.ast.unaryexpr import Btoi, Itob, Log, Sha512_256
+from pyteal.compiler.compiler import compileTeal
+from pyteal.ir.ops import Mode
+
 from ..setup import MIN_BALANCE
 
 
@@ -23,7 +28,7 @@ def recursiveReplicator() -> Expr:
         Assert(approval_prog.hasValue()),
         Assert(clear_state_prog.hasValue()),
         Assert(current_balance.hasValue()),
-        Log(Itob(Global.opcode_budget())),
+        Log(Itob(Exp(Int(2), Btoi(Txn.application_args[0])))),
         If(Btoi(Txn.application_args[0]) > Int(0)).Then(
             Seq(
                 InnerTxnBuilder.Begin(),
@@ -66,3 +71,32 @@ def recursiveReplicator() -> Expr:
         ),
         Int(1),
     )
+
+
+def approval() -> Expr:
+    return (
+        If(Txn.application_id() == Int(0))
+        .Then(Approve())
+        .ElseIf(Txn.application_args.length() == Int(1))
+        .Then(Return(recursiveReplicator()))
+        .Else(Approve())
+    )
+
+
+def clearState() -> Expr:
+    return Approve()
+
+
+def get_approval():
+    return compileTeal(approval(), mode=Mode.Application, version=6)
+
+
+def get_clear():
+    return compileTeal(clearState(), mode=Mode.Application, version=6)
+
+
+if __name__ == "__main__":
+    with open("approval.teal", "w") as f:
+        f.write(get_approval())
+    with open("clear.teal", "w") as f:
+        f.write(get_clear())
