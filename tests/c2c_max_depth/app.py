@@ -10,7 +10,7 @@ from pyteal.ast.if_ import If
 from pyteal.ast.int import Int
 from pyteal.ast.itxn import InnerTxn, InnerTxnBuilder
 from pyteal.ast.naryexpr import Concat
-from pyteal.ast.return_ import Approve, Return
+from pyteal.ast.return_ import Approve, Reject, Return
 from pyteal.ast.seq import Seq
 from pyteal.ast.txn import Txn, TxnField, TxnType
 from pyteal.ast.unaryexpr import Btoi, Itob, Log, Sha512_256
@@ -79,7 +79,7 @@ def approval() -> Expr:
         .Then(Approve())
         .ElseIf(Txn.application_args.length() == Int(1))
         .Then(Return(recursiveReplicator()))
-        .Else(Approve())
+        .Else(Reject()) # This would never happen
     )
 
 
