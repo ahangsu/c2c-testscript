@@ -1,22 +1,4 @@
-from pyteal.ast.acct import AccountParam
-from pyteal.ast.app import AppParam, OnComplete
-from pyteal.ast.assert_ import Assert
-from pyteal.ast.binaryexpr import Exp
-from pyteal.ast.bytes import Bytes
-from pyteal.ast.expr import Expr
-from pyteal.ast.gitxn import Gitxn
-from pyteal.ast.global_ import Global
-from pyteal.ast.if_ import If
-from pyteal.ast.int import Int
-from pyteal.ast.itxn import InnerTxn, InnerTxnBuilder
-from pyteal.ast.naryexpr import Concat
-from pyteal.ast.return_ import Approve, Reject, Return
-from pyteal.ast.seq import Seq
-from pyteal.ast.txn import Txn, TxnField, TxnType
-from pyteal.ast.unaryexpr import Btoi, Itob, Log, Sha512_256
-from pyteal.compiler.compiler import compileTeal
-from pyteal.ir.ops import Mode
-
+from pyteal import *
 from ..utils import MIN_BALANCE
 
 

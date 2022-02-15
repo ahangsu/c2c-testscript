@@ -1,7 +1,6 @@
 from pyteal import *
 
 
-
 FUND_PREVIOUS_APPROVAL = If(Txn.application_id() == Int(0)).Then(Seq()).Else(Approve())
 
 
