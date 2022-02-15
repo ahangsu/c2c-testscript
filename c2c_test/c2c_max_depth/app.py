@@ -17,7 +17,7 @@ from pyteal.ast.unaryexpr import Btoi, Itob, Log, Sha512_256
 from pyteal.compiler.compiler import compileTeal
 from pyteal.ir.ops import Mode
 
-from ..setup import MIN_BALANCE
+from ..utils import MIN_BALANCE
 
 
 def recursiveReplicator() -> Expr:
@@ -73,30 +73,21 @@ def recursiveReplicator() -> Expr:
     )
 
 
-def approval() -> Expr:
-    return (
-        If(Txn.application_id() == Int(0))
-        .Then(Approve())
-        .ElseIf(Txn.application_args.length() == Int(1))
-        .Then(Return(recursiveReplicator()))
-        .Else(Reject()) # This would never happen
-    )
+APPROVAL = (
+    If(Txn.application_id() == Int(0))
+    .Then(Approve())
+    .ElseIf(Txn.application_args.length() == Int(1))
+    .Then(Return(recursiveReplicator()))
+    .Else(Reject())  # This will never happen
+)
 
 
-def clearState() -> Expr:
-    return Approve()
+CLEARSTATE = Approve()
 
 
 def get_approval():
-    return compileTeal(approval(), mode=Mode.Application, version=6)
+    return compileTeal(APPROVAL, mode=Mode.Application, version=6)
 
 
 def get_clear():
-    return compileTeal(clearState(), mode=Mode.Application, version=6)
-
-
-if __name__ == "__main__":
-    with open("approval.teal", "w") as f:
-        f.write(get_approval())
-    with open("clear.teal", "w") as f:
-        f.write(get_clear())
+    return compileTeal(CLEARSTATE, mode=Mode.Application, version=6)
