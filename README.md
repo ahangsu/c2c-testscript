@@ -13,6 +13,9 @@ Activate venv:
 - `. .venv/bin/activate` (under zsh/bash)
 - `. .venv/bin/activate.fish` (if your shell is fish)
 
+Install dependencies:
+- `pip install -r requirements.txt`
+
 Config your sandbox with configuration file `sandbox.dev`:
 ```shell
 export ALGOD_CHANNEL=""
@@ -28,10 +31,6 @@ export INDEXER_BRANCH="develop"
 export INDEXER_SHA=""
 export INDEXER_DISABLED=""
 ```
-
-
-Install dependencies:
-- `pip install -r requirements.txt`
 
 Run tests:
 - First, start an instance of [sandbox](https://github.com/algorand/sandbox) (Docker required): `sandbox up dev`.
