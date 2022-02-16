@@ -7,7 +7,7 @@
     },
     "methods":[
         {
-            "name":"call",
+            "name":"callecho",
             "desc":"Proxy a call to another app",
             "args":[{ "type":"application" }],
             "returns": {"type":"string"}

@@ -4,6 +4,7 @@ from .convenience_sdk import (
     create_app,
     delete_app,
     EnvSetupDict,
+    find_method,
 )
 from .convenience_teal import (
     TealIntToAscii,

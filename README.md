@@ -35,7 +35,7 @@ Install dependencies:
 
 Run tests:
 - First, start an instance of [sandbox](https://github.com/algorand/sandbox) (Docker required): `sandbox up dev`.
-- `TODO`
+- Test with `pytest c2c_test -v -s` (`-v` gives verbose look on each sub-test, `-s` allows stdout print log).
 - When finished, stop the docker with `sandbox down` (and `sandbox clean`).
 
 ## About Using Betanet Dispenser

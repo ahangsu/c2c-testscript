@@ -1,5 +1,6 @@
 import base64
 from collections import defaultdict
+from algosdk.abi import Contract, Method
 from algosdk.kmd import KMDClient
 from algosdk.future.transaction import (
     algod,
@@ -104,3 +105,10 @@ class EnvSetupDict(defaultdict):
 
     def __setattr__(self, key, value):
         self[key] = value
+
+
+def find_method(contract: Contract, name: str) -> Method:
+    for m in contract.methods:
+        if m.name == name:
+            return m
+    raise Exception("No method of name {} found".format(name))

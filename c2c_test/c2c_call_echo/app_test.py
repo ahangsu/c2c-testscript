@@ -1,3 +1,4 @@
+import os
 import pytest
 
 from .app import get_approval, get_clear
@@ -8,9 +9,14 @@ from ..utils import (
     delete_app,
     MIN_BALANCE,
     EnvSetupDict,
+    find_method,
 )
 from algosdk.v2client import indexer
-from algosdk.atomic_transaction_composer import AccountTransactionSigner
+from algosdk.abi import Contract
+from algosdk.atomic_transaction_composer import (
+    AccountTransactionSigner,
+    AtomicTransactionComposer,
+)
 from algosdk.future.transaction import (
     PaymentTxn,
     algod,
@@ -20,7 +26,7 @@ from algosdk.future.transaction import (
 )
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def context():
     ctxt = EnvSetupDict()
     # Setup Algod and Indexer clients
@@ -41,14 +47,18 @@ def context():
         ctxt.algod_client, ctxt.addr, ctxt.pk, get_approval(), get_clear()
     )
     ctxt.app_addr_2nd = logic.get_application_address(ctxt.app_id_2nd)
+    # prepare contract
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "contract.json")
+    with open(path) as f:
+        jsonContract = f.read()
+    ctxt.contract = Contract.from_json(jsonContract)
 
-    ctxt.sp = ctxt.algod_client.suggested_params()
-    ctxt.p1 = PaymentTxn(ctxt.addr, ctxt.sp, ctxt.app_addr_1st, int(MIN_BALANCE))
-    ctxt.p2 = PaymentTxn(ctxt.addr, ctxt.sp, ctxt.app_addr_2nd, int(MIN_BALANCE))
+    sp = ctxt.algod_client.suggested_params()
+    ctxt.p1 = PaymentTxn(ctxt.addr, sp, ctxt.app_addr_1st, int(MIN_BALANCE))
+    ctxt.p2 = PaymentTxn(ctxt.addr, sp, ctxt.app_addr_2nd, int(MIN_BALANCE))
     ctxt.stxns = [txn.sign(ctxt.pk) for txn in assign_group_id([ctxt.p1, ctxt.p2])]
     txid = ctxt.algod_client.send_transactions(ctxt.stxns)
     wait_for_confirmation(ctxt.algod_client, txid, 2)
-    ctxt.signer = AccountTransactionSigner(ctxt.pk)
 
     yield ctxt
 
@@ -58,8 +68,29 @@ def context():
 
 
 def test_algod(context: EnvSetupDict):
-    print(context.app_id_1st, context.app_id_2nd)
-    pass
+    print(
+        "=> app1 id: {}, app2 id: {}".format(context.app_id_1st, context.app_id_2nd),
+        end=" ",
+    )
+    signer = AccountTransactionSigner(context.pk)
+    atc = AtomicTransactionComposer()
+    sp = context.algod_client.suggested_params()
+    sp.fee = sp.min_fee * 2
+    atc.add_method_call(
+        context.app_id_1st,
+        find_method(context.contract, "callecho"),
+        context.addr,
+        sp,
+        signer,
+        method_args=[context.app_id_2nd],
+    )
+    result = atc.execute(context.algod_client, 4)
+    assert len(result.abi_results) == 1
+    result = result.abi_results[0]
+    assert not result.decode_error
+    assert len(result.tx_info["inner-txns"]) == 1
+    assert result.tx_info["inner-txns"][0]["logs"] == result.tx_info["logs"]
+    print("=> RESULT: {}".format(result.return_value), end=" ")
 
 
 def test_indexer_validation(context: EnvSetupDict):
