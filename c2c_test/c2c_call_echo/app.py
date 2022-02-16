@@ -19,13 +19,13 @@ def echo():
 
 @Subroutine(TealType.uint64, name="callecho(application)string")
 def callecho():
-    calledAppId = Btoi(Txn.application_args[1])
+    appIdToCall = Btoi(Txn.application_args[1])
     return Seq(
         InnerTxnBuilder.Begin(),
         InnerTxnBuilder.SetFields(
             {
                 TxnField.type_enum: TxnType.ApplicationCall,
-                TxnField.application_id: Txn.applications[calledAppId],
+                TxnField.application_id: Txn.applications[appIdToCall],
                 TxnField.application_args: [MethodSignature(echo.name())],
                 TxnField.fee: Int(0),
             }

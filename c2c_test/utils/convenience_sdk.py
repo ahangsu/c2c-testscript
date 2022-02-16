@@ -1,4 +1,5 @@
 import base64
+from collections import defaultdict
 from algosdk.kmd import KMDClient
 from algosdk.future.transaction import (
     algod,
@@ -89,3 +90,17 @@ def delete_app(client: algod.AlgodClient, app_id: int, addr: str, pk: str):
     txid = client.send_transaction(signed)
 
     return wait_for_confirmation(client, txid, 4)
+
+
+class EnvSetupDict(defaultdict):
+    def __init__(self):
+        super(EnvSetupDict, self).__init__(EnvSetupDict)
+
+    def __getattr__(self, key):
+        try:
+            return self[key]
+        except KeyError:
+            raise AttributeError(key)
+
+    def __setattr__(self, key, value):
+        self[key] = value

@@ -9,6 +9,8 @@ class TestEnvConfig:
     KMD_TOKEN: str
     KMD_WALLET_NAME: str
     KMD_WALLET_PASSWORD: str
+    INDEXER_TOKEN: str
+    INDEXER_ADDRESS: str
 
 
 SandBoxTestEnvConfig = TestEnvConfig(
@@ -18,6 +20,8 @@ SandBoxTestEnvConfig = TestEnvConfig(
     KMD_TOKEN="a" * 64,
     KMD_WALLET_NAME="unencrypted-default-wallet",
     KMD_WALLET_PASSWORD="",
+    INDEXER_TOKEN="",
+    INDEXER_ADDRESS="http://localhost:8980",
 )
 
 TESTENV_INUSE = SandBoxTestEnvConfig
