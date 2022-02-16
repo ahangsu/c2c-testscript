@@ -1,4 +1,3 @@
-from typing import cast
 from ..utils import TealItoa, TealMethodReturn
 from pyteal import *
 
