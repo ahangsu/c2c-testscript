@@ -25,14 +25,28 @@ def spin() -> Expr:
     return Seq()
 
 
-APPROVAL = Cond([])
+FAKE_RANDOM_APPROVAL = Cond([])
+
+
+RANDOM_BYTE_APPROVAL = Cond([])
+
+
+SLOT_MACHINE_APPROVAL = Cond([])
 
 
 CLEARSTATE = Approve()
 
 
-def get_approval():
-    return compileTeal(APPROVAL, mode=Mode.Application, version=6)
+def get_fake_random_approval():
+    return compileTeal(FAKE_RANDOM_APPROVAL, mode=Mode.Application, version=6)
+
+
+def get_random_byte_approval():
+    return compileTeal(RANDOM_BYTE_APPROVAL, mode=Mode.Application, version=6)
+
+
+def get_slot_machine_approval():
+    return compileTeal(SLOT_MACHINE_APPROVAL, mode=Mode.Application, version=6)
 
 
 def get_clear():

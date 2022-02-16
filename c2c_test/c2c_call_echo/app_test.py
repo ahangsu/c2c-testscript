@@ -39,11 +39,11 @@ def context():
     # Setup the account to use
     ctxt.addr, ctxt.pk = get_config_accounts(TESTENV_INUSE)[0]
     # Create 2 (same) application, for later construct inner application call
-    ctxt.app_id_1st = create_app(
+    _, ctxt.app_id_1st = create_app(
         ctxt.algod_client, ctxt.addr, ctxt.pk, get_approval(), get_clear()
     )
     ctxt.app_addr_1st = logic.get_application_address(ctxt.app_id_1st)
-    ctxt.app_id_2nd = create_app(
+    _, ctxt.app_id_2nd = create_app(
         ctxt.algod_client, ctxt.addr, ctxt.pk, get_approval(), get_clear()
     )
     ctxt.app_addr_2nd = logic.get_application_address(ctxt.app_id_2nd)

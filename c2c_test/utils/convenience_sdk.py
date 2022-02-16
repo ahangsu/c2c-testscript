@@ -1,5 +1,6 @@
 import base64
 from collections import defaultdict
+from typing import Tuple
 from algosdk.abi import Contract, Method
 from algosdk.kmd import KMDClient
 from algosdk.future.transaction import (
@@ -39,7 +40,7 @@ def get_config_accounts(configPack: TestEnvConfig):
     return accounts
 
 
-def create_app(client: algod.AlgodClient, addr: str, pk: str, approval, clear) -> int:
+def create_app(client: algod.AlgodClient, addr: str, pk: str, approval, clear) -> Tuple[str, int]:
     # Get suggested params from network
     sp = client.suggested_params()
 
@@ -74,7 +75,7 @@ def create_app(client: algod.AlgodClient, addr: str, pk: str, approval, clear) -
     # Wait for the result so we can return the app id
     result = wait_for_confirmation(client, txid, 4)
 
-    return result["application-index"]
+    return txid, result["application-index"]
 
 
 def delete_app(client: algod.AlgodClient, app_id: int, addr: str, pk: str):
