@@ -83,8 +83,5 @@ Transaction ID: [NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA](https://b
 
 ### On the possibility of running such tests
 
-There are 2 things I am thinking that might stop a test from being executed over betanet:
+1 things that might stop a test from being executed over betanet:
 - Too much fund needed (100+?)
-- Relying on a pre-computed applicationID and impossible to rewrite
-
-Need to think through contract code, check how much fund needed, and decide if the sum of all these funds are lower than a small number of dispense.
