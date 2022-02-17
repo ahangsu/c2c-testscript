@@ -78,7 +78,7 @@ Transaction ID: [NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA](https://b
     - [x] script written
     - [ ] indexer/algod test
 - `go-algorand` e2e test for c2c featrue `app-inner-calls.py`
-  - [ ] script written
+  - [x] script written
   - [ ] indexer/algod test
 
 Need to calculate how much fund need for each test.
