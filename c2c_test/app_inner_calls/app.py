@@ -1,8 +1,80 @@
-from pyteal import *
+FUND_PREVIOUS = """
+#pragma version 6
+txn ApplicationID
+bz end
+
+itxn_begin
+    int pay
+    itxn_field TypeEnum
+
+    txn GroupIndex
+    int 1
+    -
+    gtxns CreatedApplicationID
+    dup
+    store 0
+    app_params_get AppAddress
+    assert
+    itxn_field Receiver
+
+    int 1000000
+    itxn_field Amount
+
+    itxn_next
+
+    int appl
+    itxn_field TypeEnum
+
+    load 0
+    itxn_field ApplicationID
+
+    txn GroupIndex
+    int 2
+    -
+    gtxns CreatedAssetID
+    itxn_field Assets
+
+    method "start(asset)"
+    itxn_field ApplicationArgs
+
+    byte 0x00
+    itxn_field ApplicationArgs
+itxn_submit
+
+end:
+    int 1
+"""
 
 
-FUND_PREVIOUS_APPROVAL = If(Txn.application_id() == Int(0)).Then(Seq()).Else(Approve())
+APP_TEAL = """
+#pragma version 6
+txn ApplicationID
+bz end
 
+txn ApplicationArgs 0
+method "start(asset)"
+==
+bz next0
+itxn_begin
+    int axfer
+    itxn_field TypeEnum
+
+    txn ApplicationArgs 1
+    btoi
+    txnas Assets
+    itxn_field XferAsset
+
+    global CurrentApplicationAddress
+    itxn_field AssetReceiver
+itxn_submit
+
+next0:
+    int 0
+    return
+
+end:
+    int 1
+"""
 
 """
 from goal import Goal
@@ -24,42 +96,6 @@ joeb = goal.balance(joe)
 # before it and invokes its start(asset) method.  Of course, this app must
 # be prefunded to do so. And in real life, would want to check its
 # sender as access control
-fund_previous = \"""
-#pragma version 6
- txn ApplicationID
- bz end
- itxn_begin
-  int pay
-  itxn_field TypeEnum
-  txn GroupIndex
-  int 1
-  -
-  gtxns CreatedApplicationID
-  dup
-  store 0
-  app_params_get AppAddress
-  assert
-  itxn_field Receiver
-  int 1000000
-  itxn_field Amount
- itxn_next
-  int appl
-  itxn_field TypeEnum
-  load 0
-  itxn_field ApplicationID
-  txn GroupIndex
-  int 2
-  -
-  gtxns CreatedAssetID
-  itxn_field Assets
-  method "start(asset)"
-  itxn_field ApplicationArgs
-  byte 0x00
-  itxn_field ApplicationArgs
- itxn_submit
-end:
- int 1
-\"""
 
 txinfo, err = goal.app_create(joe, goal.assemble(fund_previous))
 assert not err, err
@@ -78,26 +114,6 @@ assert not err, err
 goal.autosend = False
 create_asa = goal.asset_create(joe, total=10_000, unit_name="oz", asset_name="Gold")
 app_teal = \"""
-#pragma version 6
- txn ApplicationID
- bz end
- txn ApplicationArgs 0
- method "start(asset)"
- ==
- bz next0
- itxn_begin
- int axfer
- itxn_field TypeEnum
- txn ApplicationArgs 1
- btoi
- txnas Assets
- itxn_field XferAsset
- global CurrentApplicationAddress
- itxn_field AssetReceiver
- itxn_submit
-next0:
-end:
- int 1
 \"""
 create_app = goal.app_create(joe, goal.assemble(app_teal))
 start_app = goal.app_call(joe, funder)

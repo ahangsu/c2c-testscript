@@ -76,7 +76,7 @@ Transaction ID: [NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA](https://b
     - [ ] indexer/algod test (almost done)
   - C2C max depth
     - [x] script written
-    - [ ] indexer/algod test pending
+    - [ ] indexer/algod test
 - `go-algorand` e2e test for c2c featrue `app-inner-calls.py`
   - [ ] script written
   - [ ] indexer/algod test
