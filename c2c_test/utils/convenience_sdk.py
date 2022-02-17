@@ -41,7 +41,7 @@ def get_config_accounts(configPack: TestEnvConfig):
 
 
 def create_app(
-    client: algod.AlgodClient, addr: str, pk: str, approval, clear
+    client: algod.AlgodClient, addr: str, pk: str, approval, clear, _schema: StateSchema = StateSchema(0, 0)
 ) -> Tuple[str, int]:
     # Get suggested params from network
     sp = client.suggested_params()
@@ -55,7 +55,7 @@ def create_app(
     clear_bytes = base64.b64decode(clear_result["result"])
 
     # We dont need no stinkin storage
-    schema = StateSchema(0, 0)
+    schema = _schema
 
     # Create the transaction
     create_txn = ApplicationCreateTxn(

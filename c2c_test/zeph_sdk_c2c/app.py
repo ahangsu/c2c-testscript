@@ -86,7 +86,7 @@ def spin() -> Expr:
                     MethodSignature(randElement.name()),
                     encodeStrToABIStr(App.globalGet(Bytes("reel2"))),
                 ],
-                TxnField.applications: Txn.applications[1],
+                TxnField.applications: [Txn.applications[1]],
             }
         ),
         InnerTxnBuilder.Next(),
@@ -98,7 +98,7 @@ def spin() -> Expr:
                     MethodSignature(randElement.name()),
                     encodeStrToABIStr(App.globalGet(Bytes("reel1"))),
                 ],
-                TxnField.applications: Txn.applications[1],
+                TxnField.applications: [Txn.applications[1]],
             }
         ),
         InnerTxnBuilder.Next(),
@@ -110,7 +110,7 @@ def spin() -> Expr:
                     MethodSignature(randElement.name()),
                     encodeStrToABIStr(App.globalGet(Bytes("reel0"))),
                 ],
-                TxnField.applications: Txn.applications[1],
+                TxnField.applications: [Txn.applications[1]],
             }
         ),
         InnerTxnBuilder.Submit(),
@@ -151,18 +151,18 @@ FAKE_RANDOM_APPROVAL = Cond(
         Txn.application_id() == Int(0),
         Seq(App.globalPut(Bytes("counter"), Int(0)), Approve()),
     ],
-    [Txn.application_args[0] == MethodSignature(randInt.name()), Return(randInt())],
     *DEFAULT_HANDLERS,
+    [Txn.application_args[0] == MethodSignature(randInt.name()), Return(randInt())],
 )
 
 
 RANDOM_BYTE_APPROVAL = Cond(
     [Txn.application_id() == Int(0), Approve()],
+    *DEFAULT_HANDLERS,
     [
         Txn.application_args[0] == MethodSignature(randElement.name()),
         Return(randElement()),
     ],
-    *DEFAULT_HANDLERS,
 )
 
 
@@ -170,16 +170,15 @@ SLOT_MACHINE_APPROVAL = Cond(
     [
         Txn.application_id() == Int(0),
         Seq(
-            App.globalPut(Bytes("num_reels"), Int(3)),
             App.globalPut(Bytes("reel0"), Bytes("@!-")),
             App.globalPut(Bytes("reel1"), Bytes("@@!---")),
             App.globalPut(Bytes("reel2"), Bytes("@!------")),
             Approve(),
         ),
     ],
+    *DEFAULT_HANDLERS,
     [Txn.application_args[0] == MethodSignature(setReels.name()), Return(setReels())],
     [Txn.application_args[0] == MethodSignature(spin.name()), Return(spin())],
-    *DEFAULT_HANDLERS,
 )
 
 
