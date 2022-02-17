@@ -30,6 +30,7 @@ from algosdk.future.transaction import (
     wait_for_confirmation,
 )
 
+
 @pytest.fixture(scope="module")
 def context():
     ctxt = EnvSetupDict()
@@ -43,16 +44,26 @@ def context():
     # Setup the account to use
     ctxt.addr, ctxt.pk = get_config_accounts(TESTENV_INUSE)[0]
     _, ctxt.fake_random_id = create_app(
-        ctxt.algod_client, ctxt.addr, ctxt.pk, get_fake_random_approval(), get_clear(), StateSchema(1, 0)
+        ctxt.algod_client,
+        ctxt.addr,
+        ctxt.pk,
+        get_fake_random_approval(),
+        get_clear(),
+        StateSchema(1, 0),
     )
     _, ctxt.random_byte_id = create_app(
         ctxt.algod_client, ctxt.addr, ctxt.pk, get_random_byte_approval(), get_clear()
     )
     _, ctxt.slot_machine_id = create_app(
-        ctxt.algod_client, ctxt.addr, ctxt.pk, get_slot_machine_approval(), get_clear(), StateSchema(0, 3)
+        ctxt.algod_client,
+        ctxt.addr,
+        ctxt.pk,
+        get_slot_machine_approval(),
+        get_clear(),
+        StateSchema(0, 3),
     )
 
-    yield
+    yield ctxt
 
     delete_app(ctxt.algod_client, ctxt.fake_random_id, ctxt.addr, ctxt.pk)
     delete_app(ctxt.algod_client, ctxt.random_byte_id, ctxt.addr, ctxt.pk)
