@@ -40,7 +40,9 @@ def get_config_accounts(configPack: TestEnvConfig):
     return accounts
 
 
-def create_app(client: algod.AlgodClient, addr: str, pk: str, approval, clear) -> Tuple[str, int]:
+def create_app(
+    client: algod.AlgodClient, addr: str, pk: str, approval, clear
+) -> Tuple[str, int]:
     # Get suggested params from network
     sp = client.suggested_params()
 
