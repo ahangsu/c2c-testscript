@@ -81,7 +81,4 @@ Transaction ID: [NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA](https://b
   - [ ] script written
   - [ ] indexer/algod test
 
-### On the possibility of running such tests
-
-1 things that might stop a test from being executed over betanet:
-- Too much fund needed (100+?)
+Need to calculate how much fund need for each test.
