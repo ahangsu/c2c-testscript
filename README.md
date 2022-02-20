@@ -70,13 +70,12 @@ Transaction ID: [NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA](https://b
 - Zeph's C2C SDK test (need to change pre-compute app-id to something else)
   - [x] script rewritten
   - [ ] indexer/algod test
-- Ben's AVM 1.1 Demo code
-  - C2C call echo
-    - [x] script rewritten
-    - [ ] indexer/algod test (almost done)
-  - C2C max depth
-    - [x] script written
-    - [ ] indexer/algod test
+- C2C create inner 256 calls
+  - [x] script rewritten
+  - [x] indexer/algod test
+- C2C max call depth 8
+  - [x] script written
+  - [ ] indexer/algod test
 - `go-algorand` e2e test for c2c featrue `app-inner-calls.py`
   - [x] script written
   - [ ] indexer/algod test

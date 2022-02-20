@@ -2,6 +2,7 @@ from .env_config import (
     TestEnvConfig,
     SandBoxTestEnvConfig,
     MIN_BALANCE,
+    MAX_CALL_DEPTH,
     TESTENV_INUSE,
     MAX_INNER_CALL_COUNT,
 )

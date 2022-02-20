@@ -2,8 +2,6 @@ import base64
 import time
 import pytest
 
-from c2c_test.utils import MAX_INNER_CALL_COUNT
-
 from .app import get_approval_call, get_approval_echo, get_clear
 from ..utils import (
     TESTENV_INUSE,
@@ -12,6 +10,7 @@ from ..utils import (
     delete_app,
     MIN_BALANCE,
     EnvSetupDict,
+    MAX_INNER_CALL_COUNT,
 )
 from algosdk.v2client import indexer
 from algosdk.future.transaction import (
