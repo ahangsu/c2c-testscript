@@ -28,5 +28,8 @@ TESTENV_INUSE = SandBoxTestEnvConfig
 
 MIN_BALANCE = int(1e5)
 
+MAX_INNER_CALL_COUNT = 256
+
+
 # TODO needs configuration for betanet, but we now work over sandbox settings
 # NOTE some thoughts about how this is done for general betanet / any other networks

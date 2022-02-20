@@ -60,7 +60,7 @@ Then go to [dispenser](https://betanet.algoexplorer.io/dispenser) to retrieve so
 
 Transaction ID: [NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA](https://betanet.algoexplorer.io/tx/NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA).
 
-> Can also verify with `goal account list -d ~/node/betanetdata** to check how much microAlgos we have.
+> Can also verify with `goal account list -d ~/node/betanetdata` to check how much microAlgos we have.
 
 **TODO**: The question left to be answered is: 
 - if we can provide a unified url+port flavor solution so we can quickly adapt from sandbox test to betanet test.
