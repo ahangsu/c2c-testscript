@@ -55,12 +55,9 @@ def recursiveReplicator() -> Expr:
     )
 
 
-APPROVAL = (
-    If(Txn.application_id() == Int(0))
-    .Then(Approve())
-    .ElseIf(Txn.application_args.length() == Int(1))
-    .Then(Return(recursiveReplicator()))
-    .Else(Reject())  # This will never happen
+APPROVAL = Cond(
+    [Txn.application_id() == Int(0), Approve()],
+    [Txn.application_args.length() == Int(1), Return(recursiveReplicator())],
 )
 
 

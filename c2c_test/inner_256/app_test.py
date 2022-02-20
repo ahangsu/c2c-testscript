@@ -38,7 +38,7 @@ def context():
     )
     # Setup the account to use
     ctxt.addr, ctxt.pk = get_config_accounts(TESTENV_INUSE)[0]
-    # Create 2 (same) application, for later construct inner application call
+    # Create 2 applications, for later construct inner application call
     _, ctxt.app_id_1st = create_app(
         ctxt.algod_client,
         ctxt.addr,
@@ -81,22 +81,17 @@ def test_algod(context: EnvSetupDict):
         context.addr,
         context.algod_client.suggested_params(),
         context.app_addr_1st,
-        MIN_BALANCE,
-    )
-    context.payment_2nd_txn = PaymentTxn(
-        context.addr,
-        context.algod_client.suggested_params(),
-        context.app_addr_2nd,
-        MIN_BALANCE,
+        MIN_BALANCE * 2,
     )
     context.stxns = [
         txn.sign(context.pk)
-        for txn in assign_group_id(
-            [context.app_call_txn, context.payment_1st_txn, context.payment_2nd_txn]
-        )
+        for txn in assign_group_id([context.payment_1st_txn, context.app_call_txn])
     ]
-    context.txid = context.algod_client.send_transactions(context.stxns)
-    result = wait_for_confirmation(context.algod_client, context.txid, 2)
+    txids = [s.transaction.get_txid() for s in context.stxns]
+    context.algod_client.send_transactions(context.stxns)
+    results = [wait_for_confirmation(context.algod_client, txid, 4) for txid in txids]
+    result = results[1]
+
     assert "logs" not in result
     assert len(result["inner-txns"]) == MAX_INNER_CALL_COUNT
     for i in range(MAX_INNER_CALL_COUNT):
@@ -109,9 +104,17 @@ def test_algod(context: EnvSetupDict):
 
 
 def test_indexer_validation(context: EnvSetupDict):
-    time.sleep(10)
+    time.sleep(5)
     var = context.indexer_client.search_transactions_by_address(
         address=context.addr, txid=context.txid
     )
     print(var)
+    top_level_log = context.indexer_client.application_logs(
+        context.app_id_1st, txid=context.txid, sender_addr=context.addr
+    )
+    some_inner_log = context.indexer_client.application_logs(
+        context.app_id_2nd, txid=context.txid, sender_addr=context.app_addr_1st
+    )
+    print(top_level_log)
+    print(some_inner_log)
     pass
