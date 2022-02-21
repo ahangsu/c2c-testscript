@@ -16,7 +16,7 @@ Activate venv:
 Install dependencies:
 - `pip install -r requirements.txt`
 
-Config your sandbox with configuration file `sandbox.dev`:
+~~Config your sandbox with configuration file `config.dev`:~~
 ```shell
 export ALGOD_CHANNEL=""
 export ALGOD_URL="https://github.com/algorand/go-algorand"
@@ -32,8 +32,10 @@ export INDEXER_SHA=""
 export INDEXER_DISABLED=""
 ```
 
+Now the local configuration is relying on `config.beta`.
+
 Run tests:
-- First, start an instance of [sandbox](https://github.com/algorand/sandbox) (Docker required): `sandbox up dev`.
+- First, start an instance of [sandbox](https://github.com/algorand/sandbox) (Docker required): `sandbox up beta`.
 - Test with `pytest c2c_test -v -s` (`-v` gives verbose look on each sub-test, `-s` allows stdout print log).
 - When finished, stop the docker with `sandbox down` (and `sandbox clean`).
 
@@ -67,17 +69,17 @@ Transaction ID: [NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA](https://b
 
 ## Candidate C2C tests
 
-- Zeph's C2C SDK test (need to change pre-compute app-id to something else)
+- 16 grouped top level app each issue inner app call
   - [x] script rewritten
-  - [ ] indexer/algod test
+  - [x] indexer/algod test
 - C2C create inner 256 calls
   - [x] script rewritten
   - [x] indexer/algod test
 - C2C max call depth 8
   - [x] script written
-  - [ ] indexer/algod test
-- `go-algorand` e2e test for c2c featrue `app-inner-calls.py`
-  - [x] script written
+  - [x] indexer/algod test
+- Inner create asset, asset id should be in right place
+  - [ ] script written
   - [ ] indexer/algod test
 
 Need to calculate how much fund need for each test.
