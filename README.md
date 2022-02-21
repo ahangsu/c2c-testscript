@@ -70,16 +70,16 @@ Transaction ID: [NT3XPWO2NFDKCJTMUATNH2H5HGB47XPDTOR4SDLHFMZTNRIMLMUA](https://b
 ## Candidate C2C tests
 
 - 16 grouped top level app each issue inner app call
-  - [x] script rewritten
+  - [x] script written
   - [x] indexer/algod test
 - C2C create inner 256 calls
-  - [x] script rewritten
+  - [x] script written
   - [x] indexer/algod test
 - C2C max call depth 8
   - [x] script written
   - [x] indexer/algod test
 - Inner create asset, asset id should be in right place
-  - [ ] script written
-  - [ ] indexer/algod test
+  - [x] script written
+  - [x] indexer/algod test
 
 Need to calculate how much fund need for each test.
