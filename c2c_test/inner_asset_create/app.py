@@ -1,5 +1,4 @@
 from pyteal import *
-from ..utils import *
 
 
 @Subroutine(TealType.uint64)
