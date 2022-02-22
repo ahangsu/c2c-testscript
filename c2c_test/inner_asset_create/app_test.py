@@ -150,6 +150,11 @@ def test_indexer(context: EnvSetupDict):
     assert "created-asset-index" in oro_inner
     assert "created-asset-index" in cobre_inner
 
+    assert plata_inner["created-asset-index"] != 0
+    assert plomo_inner["created-asset-index"] != 0
+    assert oro_inner["created-asset-index"] != 0
+    assert cobre_inner["created-asset-index"] != 0
+
     assert "asset-id" in (plata_inner_creation := plata_inner["asset-config-transaction"])
     assert "asset-id" in (plomo_inner_creation := plomo_inner["asset-config-transaction"])
     assert "asset-id" in (oro_inner_creation := oro_inner["asset-config-transaction"])
