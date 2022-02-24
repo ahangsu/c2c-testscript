@@ -31,7 +31,7 @@ def call_someone():
     )
 
 
-DEFAULT_BARNCHES = [
+DEFAULT_BRANCHES = [
     [
         Or(
             Txn.on_completion() == OnComplete.UpdateApplication,
@@ -45,7 +45,7 @@ DEFAULT_BARNCHES = [
 
 APPROVAL = Cond(
     [Txn.application_id() == Int(0), Approve()],
-    *DEFAULT_BARNCHES,
+    *DEFAULT_BRANCHES,
     [Txn.application_args.length() > Int(0), Return(call_someone())],
     [Txn.on_completion() == OnComplete.NoOp, Return(log_caller())]
 )
