@@ -44,7 +44,7 @@ def callecho():
     )
 
 
-DEFAULT_BARNCHES = [
+DEFAULT_BRANCHES = [
     [
         Or(
             Txn.on_completion() == OnComplete.UpdateApplication,
@@ -67,14 +67,14 @@ APPROVAL_ECHO = Cond(
         Txn.application_id() == Int(0),
         Seq(App.globalPut(Bytes("counter"), Int(0)), Approve()),
     ],
-    *DEFAULT_BARNCHES,
+    *DEFAULT_BRANCHES,
     [Txn.on_completion() == OnComplete.NoOp, Return(echo())],
 )
 
 
 APPROVAL_CALL = Cond(
     [Txn.application_id() == Int(0), Approve()],
-    *DEFAULT_BARNCHES,
+    *DEFAULT_BRANCHES,
     [
         Txn.on_completion() == OnComplete.NoOp,
         Return(callecho()),
